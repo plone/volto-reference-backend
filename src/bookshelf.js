@@ -8,9 +8,15 @@ import knex from 'knex';
 
 import config from './config';
 
-export default bookshelf(
-  knex({
-    client: 'pg',
-    connection: config.connection,
-  }),
-);
+const Knex = knex({
+  client: 'pg',
+  connection: config.connection,
+});
+
+Knex.on('query', query => {
+  // console.log(query);
+});
+
+const Bookshelf = bookshelf(Knex);
+
+export default Bookshelf;

@@ -24,12 +24,36 @@ describe('Content', () => {
     request(app)
       .get('/news')
       .expect(200)
-      .expect(res => {
-        expect(res.body['@id']).toMatch(/http:\/\/127.0.0.1:.*\/news/);
-        expect(res.body['@type']).toBe('folder');
-        expect(res.body.title).toBe('News');
-        expect(res.body.id).toBe('news');
-      }));
+      .expect(res =>
+        Promise.all([
+          expect(res.body['@id']).toMatch(/http:\/\/127.0.0.1:.*\/news/),
+          expect(res.body['@type']).toBe('folder'),
+          expect(res.body.title).toBe('News'),
+          expect(res.body.id).toBe('news'),
+        ]),
+      ));
+  it('should add a content object', () =>
+    request(app)
+      .post('/news')
+      .send({
+        '@type': 'page',
+        title: 'My News Item',
+        description: 'News Description',
+      })
+      .expect(201)
+      //      .then(() => console.log('kek'))
+      //      .catch(err => console.log(err)));
+      .expect(res =>
+        Promise.all([
+          expect(res.body['@id']).toMatch(
+            /http:\/\/127.0.0.1:.*\/news\/my-news-item/,
+          ),
+          expect(res.body['@type']).toBe('page'),
+          expect(res.body.title).toBe('My News Item'),
+          expect(res.body.description).toBe('News Description'),
+          expect(res.body.id).toBe('my-news-item'),
+        ]),
+      ));
   it('should return not found when content not found', () =>
     request(app)
       .get('/random')

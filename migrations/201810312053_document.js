@@ -4,7 +4,10 @@ exports.up = knex =>
       .uuid('uuid')
       .primary()
       .defaultTo(knex.raw('uuid_generate_v4()'));
-    table.uuid('parent').references('document.uuid');
+    table
+      .uuid('parent')
+      .references('document.uuid')
+      .onDelete('CASCADE');
     table.string('id').notNull();
     table.string('type').references('type.id');
     table.integer('position_in_parent');

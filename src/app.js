@@ -1,10 +1,13 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import { drop, head, map } from 'lodash';
 
 import routes from './routes';
 import { DocumentRepository } from './repositories';
 
 const app = express();
+
+app.use(bodyParser.json());
 
 function traverse(document, slugs) {
   if (slugs.length === 0) {
