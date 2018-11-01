@@ -5,16 +5,16 @@ import app from '../../app';
 describe('Content', () => {
   it('should handle login', () =>
     request(app)
-      .get('/@login')
+      .post('/@login')
       .expect(200)
       .expect(res => expect(res.body.token).toBeDefined()));
   it('should handle login-renew', () =>
     request(app)
-      .get('/@login-renew')
+      .post('/@login-renew')
       .expect(200)
       .expect(res => expect(res.body.token).toBeDefined()));
   it('should handle logout', () =>
     request(app)
-      .get('/@logout')
+      .post('/@logout')
       .expect(204));
 });

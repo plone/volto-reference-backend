@@ -1,24 +1,24 @@
 export default [
   {
-    op: 'get',
+    op: 'post',
     view: '/@login',
     handler: (context, req, res) =>
       res.send({
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IiIsInN1YiI6ImFkbWluIn0.RVl8ZFJWIaA-8ujyulJvw0j3F3qFjIHDIJFK0GF6j_0',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiYWRtaW4iLCJleHAiOjE1NDExMTI3Njg5fQ.3KMYq1NbPz3fMWqApH574yHEuS8mhYRRjPaKhod5q80',
       }),
   },
   {
-    op: 'get',
+    op: 'post',
     view: '/@login-renew',
     handler: (context, req, res) =>
       res.send({
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IiIsInN1YiI6ImFkbWluIn0.RVl8ZFJWIaA-8ujyulJvw0j3F3qFjIHDIJFK0GF6j_0',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiYWRtaW4iLCJleHAiOjE1NDExMTI3Njg5fQ.3KMYq1NbPz3fMWqApH574yHEuS8mhYRRjPaKhod5q80',
       }),
   },
   {
-    op: 'get',
+    op: 'post',
     view: '/@logout',
     handler: (context, req, res) => res.status(204).send(),
   },
