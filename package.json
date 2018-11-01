@@ -1,0 +1,33 @@
+{
+  "scripts": {
+    "start": "babel-node src/server.js",
+    "test": "jest",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
+  },
+  "license": "MIT",
+  "version": "0.0.1",
+  "dependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/node": "7.0.0",
+    "@babel/plugin-proposal-decorators": "7.1.2",
+    "@babel/plugin-proposal-export-default-from": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "autobind-decorator": "2.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "23.6.0",
+    "bookshelf": "0.13.3",
+    "express": "4.16.4",
+    "jest": "23.6.0",
+    "knex": "0.13",
+    "lodash": "4.17.11",
+    "pg": "7.6.0",
+    "prettier": "1.14.3",
+    "supertest": "3.3.0",
+    "supertest-as-promised": "4.0.2"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
+  }
+}

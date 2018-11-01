@@ -1,0 +1,5 @@
+## Installation
+
+$ CREATE USER volto WITH ENCRYPTED PASSWORD 'volto';
+$ GRANT ALL PRIVILEGES ON DATABASE volto TO volto;
+$ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
