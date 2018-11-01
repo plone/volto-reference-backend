@@ -10,3 +10,4 @@
 - Update content endpoint @robgietema
 - Delete content endpoint @robgietema
 - Navigation endpoint @robgietema
+- Breadcrumbs endpoint @robgietema
