@@ -9,3 +9,4 @@
 - Create content endpoint @robgietema
 - Update content endpoint @robgietema
 - Delete content endpoint @robgietema
+- Navigation endpoint @robgietema

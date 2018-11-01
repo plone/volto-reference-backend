@@ -28,8 +28,10 @@ export default class BaseRepository {
    * @param {Object} [options] Bookshelf options to pass on to fetchAll.
    * @returns {Promise<Collection>} A Promise that resolves to a Collection of Models.
    */
-  findAll(where = {}, options = {}) {
-    return this.Model.where(where).fetchAll(options);
+  findAll(where = {}, order = 'id', options = {}) {
+    return this.Model.where(where)
+      .orderBy(order)
+      .fetchAll(options);
   }
 
   /**
@@ -89,7 +91,9 @@ export default class BaseRepository {
    * and thus "empty" Model.
    */
   delete(where, options = {}) {
-    return this.findOne(where).then(record => record.destroy(options));
+    return this.findAll(where).then(records =>
+      records.map(record => record.destroy(options)),
+    );
   }
 
   /**

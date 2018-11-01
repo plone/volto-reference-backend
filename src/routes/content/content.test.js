@@ -5,24 +5,9 @@ import bookshelf from '../../bookshelf';
 import { DocumentRepository } from '../../repositories';
 
 describe('Content', () => {
-  beforeEach(() =>
-    DocumentRepository.create(
-      {
-        uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
-        parent: '4ba6ac12-2a02-40be-a76f-9067ce98ed47',
-        id: 'news',
-        type: 'folder',
-        position_in_parent: 0,
-        json: {
-          title: 'News',
-          description: 'My News Folder',
-        },
-      },
-      { method: 'insert' },
-    ));
   afterEach(() =>
     DocumentRepository.delete({
-      uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
+      parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
     }));
   afterAll(() => bookshelf.knex.destroy());
 
