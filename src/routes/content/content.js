@@ -61,6 +61,14 @@ export default [
           },
           { patch: true },
         )
-        .then(res.status(204).send()),
+        .then(() => res.status(204).send()),
+  },
+  {
+    op: 'delete',
+    view: '',
+    handler: (context, req, res) =>
+      DocumentRepository.delete({ uuid: context.get('uuid') }).then(() =>
+        res.status(204).send(),
+      ),
   },
 ];

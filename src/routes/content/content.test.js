@@ -38,7 +38,7 @@ describe('Content', () => {
           expect(res.body.id).toBe('news'),
         ]),
       ));
-  xit('should add a content object', () =>
+  it('should add a content object', () =>
     request(app)
       .post('/news')
       .send({
@@ -77,6 +77,24 @@ describe('Content', () => {
         .send({
           title: 'My New News Item',
         })
+        .expect(204),
+    ));
+  it('should delete a content object', () =>
+    DocumentRepository.create(
+      {
+        parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
+        id: 'my-news-item',
+        type: 'page',
+        position_in_parent: 0,
+        json: {
+          title: 'My News Item',
+          description: 'News Description',
+        },
+      },
+      { method: 'insert' },
+    ).then(() =>
+      request(app)
+        .delete('/news/my-news-item')
         .expect(204),
     ));
   it('should return not found when content not found', () =>
