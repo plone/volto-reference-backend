@@ -11,3 +11,4 @@
 - Delete content endpoint @robgietema
 - Navigation endpoint @robgietema
 - Breadcrumbs endpoint @robgietema
+- Login endpoints @robgietema
