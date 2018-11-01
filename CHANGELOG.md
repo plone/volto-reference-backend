@@ -6,4 +6,5 @@
 
 - Types endpoints @robgietema
 - Get content endpoint @robgietema
-- Create content endpoint @robgietma
+- Create content endpoint @robgietema
+- Update content endpoint @robgietema

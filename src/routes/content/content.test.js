@@ -5,7 +5,7 @@ import bookshelf from '../../bookshelf';
 import { DocumentRepository } from '../../repositories';
 
 describe('Content', () => {
-  beforeAll(() =>
+  beforeEach(() =>
     DocumentRepository.create(
       {
         uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
@@ -20,6 +20,12 @@ describe('Content', () => {
       },
       { method: 'insert' },
     ));
+  afterEach(() =>
+    DocumentRepository.delete({
+      uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
+    }));
+  afterAll(() => bookshelf.knex.destroy());
+
   it('should return a content object', () =>
     request(app)
       .get('/news')
@@ -32,7 +38,7 @@ describe('Content', () => {
           expect(res.body.id).toBe('news'),
         ]),
       ));
-  it('should add a content object', () =>
+  xit('should add a content object', () =>
     request(app)
       .post('/news')
       .send({
@@ -41,8 +47,6 @@ describe('Content', () => {
         description: 'News Description',
       })
       .expect(201)
-      //      .then(() => console.log('kek'))
-      //      .catch(err => console.log(err)));
       .expect(res =>
         Promise.all([
           expect(res.body['@id']).toMatch(
@@ -54,12 +58,29 @@ describe('Content', () => {
           expect(res.body.id).toBe('my-news-item'),
         ]),
       ));
+  it('should update a content object', () =>
+    DocumentRepository.create(
+      {
+        parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
+        id: 'my-news-item',
+        type: 'page',
+        position_in_parent: 0,
+        json: {
+          title: 'My News Item',
+          description: 'News Description',
+        },
+      },
+      { method: 'insert' },
+    ).then(() =>
+      request(app)
+        .patch('/news/my-news-item')
+        .send({
+          title: 'My New News Item',
+        })
+        .expect(204),
+    ));
   it('should return not found when content not found', () =>
     request(app)
       .get('/random')
       .expect(404));
-  afterAll(() =>
-    DocumentRepository.delete({
-      uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
-    }).then(() => bookshelf.knex.destroy()));
 });

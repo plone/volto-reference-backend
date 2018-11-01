@@ -3,6 +3,8 @@ import { omit } from 'lodash';
 
 import { DocumentRepository } from '../../repositories';
 
+const omitProperties = ['@type', 'id'];
+
 export default [
   {
     op: 'get',
@@ -15,6 +17,7 @@ export default [
         }`,
         '@type': context.get('type'),
         id: context.get('id'),
+        UID: context.get('uuid'),
       });
     },
   },
@@ -28,7 +31,7 @@ export default [
           id: req.body.id || slugify(req.body.title, { lower: true }),
           type: req.body['@type'],
           position_in_parent: 0,
-          json: omit(req.body, ['@type', 'id']),
+          json: omit(req.body, omitProperties),
         },
         { method: 'insert' },
       ).then(document =>
@@ -39,7 +42,25 @@ export default [
           }/${document.get('id')}`,
           '@type': document.get('type'),
           id: document.get('id'),
+          UID: document.get('uuid'),
         }),
       ),
+  },
+  {
+    op: 'patch',
+    view: '',
+    handler: (context, req, res) =>
+      context
+        .save(
+          {
+            uuid: context.get('uuid'),
+            json: {
+              ...context.get('json'),
+              ...omit(req.body, omitProperties),
+            },
+          },
+          { patch: true },
+        )
+        .then(res.status(204).send()),
   },
 ];
