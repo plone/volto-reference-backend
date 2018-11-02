@@ -1,4 +1,4 @@
-import { drop, head, last } from 'lodash';
+import { compact, drop, head, last } from 'lodash';
 
 import { DocumentRepository } from '../../repositories';
 
@@ -29,7 +29,7 @@ export default [
       const slugs = req.params[0].split('/');
       return DocumentRepository.findOne({ parent: null })
         .then(document =>
-          traverse(document, drop(slugs), [
+          traverse(document, compact(slugs), [
             {
               '@id': `${req.protocol || 'http'}://${req.headers.host}`,
               title: document.get('json').title,

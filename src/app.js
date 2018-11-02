@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { drop, head, map } from 'lodash';
+import { compact, drop, head, map } from 'lodash';
 
 import routes from './routes';
 import { DocumentRepository } from './repositories';
@@ -29,7 +29,7 @@ map(routes, route => {
   app[route.op](`*${route.view}`, (req, res) => {
     const slugs = req.params[0].split('/');
     DocumentRepository.findOne({ parent: null })
-      .then(document => traverse(document, drop(slugs)))
+      .then(document => traverse(document, compact(slugs)))
       .then(document => route.handler(document, req, res))
       .catch(DocumentRepository.Model.NotFoundError, () => {
         res.status(404).send({ error: 'Not Found' });
