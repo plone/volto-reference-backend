@@ -4,8 +4,10 @@
  */
 
 import bcrypt from 'bcrypt-promise';
+import jwt from 'jsonwebtoken';
 
 import { UserRepository } from '../../repositories';
+import { secret } from '../../config.js';
 
 export default [
   {
@@ -26,8 +28,14 @@ export default [
             same =>
               same
                 ? res.send({
-                    token:
-                      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiYWRtaW4iLCJleHAiOjE1NDExMTI3Njg5fQ.3KMYq1NbPz3fMWqApH574yHEuS8mhYRRjPaKhod5q80',
+                    token: jwt.sign(
+                      {
+                        sub: user.get('id'),
+                        fullname: user.get('fullname'),
+                      },
+                      secret,
+                      { expiresIn: '12h' },
+                    ),
                   })
                 : res.status(401).send({
                     error: {
@@ -52,8 +60,14 @@ export default [
     view: '/@login-renew',
     handler: (context, req, res) =>
       res.send({
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsbmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiYWRtaW4iLCJleHAiOjE1NDExMTI3Njg5fQ.3KMYq1NbPz3fMWqApH574yHEuS8mhYRRjPaKhod5q80',
+        token: jwt.sign(
+          {
+            sub: 'admin',
+            fullname: 'Admin',
+          },
+          secret,
+          { expiresIn: '12h' },
+        ),
       }),
   },
   {

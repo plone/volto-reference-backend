@@ -51,6 +51,7 @@
     "bookshelf": "0.13.3",
     "express": "4.16.4",
     "jest": "23.6.0",
+    "jsonwebtoken": "8.3.0",
     "knex": "0.13",
     "lodash": "4.17.11",
     "pg": "7.6.0",

@@ -15,3 +15,4 @@
 - Actions endpoint @robgietema
 - Child objects to content endpoints @robgietema
 - Authentication to login call @robgietema
+- Generate JWT token @robgietema
