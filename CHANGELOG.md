@@ -13,3 +13,4 @@
 - Breadcrumbs endpoint @robgietema
 - Login endpoints @robgietema
 - Actions endpoint @robgietema
+- Child objects to content endpoints @robgietema

@@ -10,22 +10,41 @@ import { DocumentRepository, TypeRepository } from '../../repositories';
 
 const omitProperties = ['@type', 'id'];
 
+/**
+ * Convert document to json.
+ * @method documentToJson
+ * @param {Object} document Current document object.
+ * @param {Object} req Request object.
+ * @returns {Object} Json representation of the document.
+ */
+function documentToJson(document, req, id = '') {
+  return {
+    ...document.get('json'),
+    '@id': `${req.protocol || 'http'}://${req.headers.host}${
+      req.params[0]
+    }${id}`,
+    '@type': document.get('type'),
+    id: document.get('id'),
+    UID: document.get('uuid'),
+  };
+}
+
 export default [
   {
     op: 'get',
     view: '',
-    handler: (context, req, res) => {
-      res.send({
-        ...context.get('json'),
-        '@id': `${req.protocol || 'http'}://${req.headers.host}${
-          req.params[0]
-        }`,
-        '@type': context.get('type'),
-        id: context.get('id'),
-        UID: context.get('uuid'),
-        items: [],
-      });
-    },
+    handler: (context, req, res) =>
+      DocumentRepository.findAll(
+        { parent: context.get('uuid') },
+        'position_in_parent',
+      ).then(items =>
+        res.send({
+          ...documentToJson(context, req),
+          items: items.map(item =>
+            documentToJson(item, req, `/${item.get('id')}`),
+          ),
+        }),
+      ),
   },
   {
     op: 'post',
