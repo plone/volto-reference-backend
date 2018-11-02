@@ -4,7 +4,7 @@
  */
 
 import slugify from 'slugify';
-import { omit } from 'lodash';
+import { keys, omit, pick } from 'lodash';
 
 import { DocumentRepository, TypeRepository } from '../../repositories';
 
@@ -58,7 +58,10 @@ export default [
             type: req.body['@type'],
             position_in_parent: 0,
             json: {
-              ...omit(req.body, omitProperties),
+              ...omit(
+                pick(req.body, keys(type.get('schema').properties)),
+                omitProperties,
+              ),
               layout: type.get('schema').default_layout,
             },
           },
