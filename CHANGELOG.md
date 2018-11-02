@@ -14,4 +14,4 @@
 - Login endpoints @robgietema
 - Actions endpoint @robgietema
 - Child objects to content endpoints @robgietema
-- Add authentication to login call @robgietema
+- Authentication to login call @robgietema
