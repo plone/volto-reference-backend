@@ -1,3 +1,8 @@
+/**
+ * Login routes.
+ * @module routes/login/login
+ */
+
 export default [
   {
     op: 'post',

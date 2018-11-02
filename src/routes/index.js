@@ -1,3 +1,8 @@
+/**
+ * Global routes.
+ * @module routes
+ */
+
 import actions from './actions/actions';
 import breadcrumbs from './breadcrumbs/breadcrumbs';
 import content from './content/content';

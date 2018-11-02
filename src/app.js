@@ -1,3 +1,8 @@
+/**
+ * App.
+ * @module app
+ */
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import { compact, drop, head, map } from 'lodash';
@@ -15,6 +20,13 @@ app.use((req, res, next) => {
   next();
 });
 
+/**
+ * Traverse path.
+ * @method traverse
+ * @param {Object} document Current document object.
+ * @param {Array} slugs Array of slugs.
+ * @returns {Promise<Object>} A Promise that resolves to an object.
+ */
 function traverse(document, slugs) {
   if (slugs.length === 0) {
     return Promise.resolve(document);

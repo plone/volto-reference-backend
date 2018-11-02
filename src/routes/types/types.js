@@ -1,3 +1,8 @@
+/**
+ * Types routes.
+ * @module routes/types/types
+ */
+
 import { TypeRepository } from '../../repositories';
 
 export default [

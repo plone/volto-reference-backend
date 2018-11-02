@@ -1,3 +1,8 @@
+/**
+ * Content routes.
+ * @module routes/content/content
+ */
+
 import slugify from 'slugify';
 import { omit } from 'lodash';
 
@@ -39,18 +44,20 @@ export default [
             },
           },
           { method: 'insert' },
-        ).then(document =>
-          res.status(201).send({
-            ...document.get('json'),
-            '@id': `${req.protocol || 'http'}://${req.headers.host}${
-              req.params[0]
-            }/${document.get('id')}`,
-            '@type': document.get('type'),
-            id: document.get('id'),
-            UID: document.get('uuid'),
-            items: [],
-          }),
-        ),
+        )
+          .then(document => document.fetch())
+          .then(document =>
+            res.status(201).send({
+              ...document.get('json'),
+              '@id': `${req.protocol || 'http'}://${req.headers.host}${
+                req.params[0]
+              }/${document.get('id')}`,
+              '@type': document.get('type'),
+              id: document.get('id'),
+              UID: document.get('uuid'),
+              items: [],
+            }),
+          ),
       ),
   },
   {

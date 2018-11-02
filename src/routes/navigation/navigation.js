@@ -1,3 +1,8 @@
+/**
+ * Navigation routes.
+ * @module routes/navigation/navigation
+ */
+
 import { DocumentRepository } from '../../repositories';
 
 export default [

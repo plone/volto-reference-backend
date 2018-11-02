@@ -1,3 +1,8 @@
+/**
+ * Action route.
+ * @module routes/actions/actions
+ */
+
 export default [
   {
     op: 'get',

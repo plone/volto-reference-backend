@@ -1,7 +1,20 @@
+/**
+ * Breadcrumbs route.
+ * @module routes/breadcrumbs/breadcrumbs
+ */
+
 import { compact, drop, head, last } from 'lodash';
 
 import { DocumentRepository } from '../../repositories';
 
+/**
+ * Traverse path.
+ * @method traverse
+ * @param {Object} document Current document object.
+ * @param {Array} slugs Array of slugs.
+ * @param {Array} items Current array of items.
+ * @returns {Promise<Array>} A Promise that resolves to an array of items.
+ */
 function traverse(document, slugs, items) {
   if (slugs.length === 0) {
     return Promise.resolve(items);
