@@ -6,3 +6,4 @@
 
 export DocumentRepository from './document/document';
 export TypeRepository from './type/type';
+export UserRepository from './user/user';

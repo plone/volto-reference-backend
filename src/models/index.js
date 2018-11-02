@@ -6,3 +6,4 @@
 
 export Document from './document/document';
 export Type from './type/type';
+export User from './user/user';

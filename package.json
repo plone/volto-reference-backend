@@ -45,6 +45,8 @@
     "autobind-decorator": "2.1.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.6.0",
+    "bcrypt": "3.0.2",
+    "bcrypt-promise": "2.0.0",
     "body-parser": "1.18.3",
     "bookshelf": "0.13.3",
     "express": "4.16.4",

@@ -3,12 +3,9 @@
  * @module repositories/document/document
  */
 
-import autobind from 'autobind-decorator';
-
 import { Type } from '../../models';
 import { BaseRepository } from '../../helpers';
 
-@autobind
 /**
  * A Repository for Type.
  * @class TypeRepository
