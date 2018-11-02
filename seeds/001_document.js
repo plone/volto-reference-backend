@@ -7,6 +7,7 @@ exports.seed = knex =>
       position_in_parent: 0,
       json: {
         title: 'Site',
+        layout: 'document_view',
       },
     },
     {
@@ -17,6 +18,7 @@ exports.seed = knex =>
       position_in_parent: 0,
       json: {
         title: 'News',
+        layout: 'listing_view',
       },
     },
     {
@@ -27,6 +29,7 @@ exports.seed = knex =>
       position_in_parent: 1,
       json: {
         title: 'Events',
+        layout: 'listing_view',
       },
     },
     {
@@ -37,6 +40,7 @@ exports.seed = knex =>
       position_in_parent: 2,
       json: {
         title: 'Users',
+        layout: 'listing_view',
       },
     },
   ]);

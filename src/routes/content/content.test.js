@@ -21,6 +21,8 @@ describe('Content', () => {
           expect(res.body['@type']).toBe('folder'),
           expect(res.body.title).toBe('News'),
           expect(res.body.id).toBe('news'),
+          expect(res.body.UID).toBeDefined(),
+          expect(res.body.items).toBeDefined(),
         ]),
       ));
   it('should add a content object', () =>
@@ -41,6 +43,9 @@ describe('Content', () => {
           expect(res.body.title).toBe('My News Item'),
           expect(res.body.description).toBe('News Description'),
           expect(res.body.id).toBe('my-news-item'),
+          expect(res.body.layout).toBe('document_view'),
+          expect(res.body.UID).toBeDefined(),
+          expect(res.body.items).toBeDefined(),
         ]),
       ));
   it('should update a content object', () =>

@@ -1,7 +1,7 @@
 import slugify from 'slugify';
 import { omit } from 'lodash';
 
-import { DocumentRepository } from '../../repositories';
+import { DocumentRepository, TypeRepository } from '../../repositories';
 
 const omitProperties = ['@type', 'id'];
 
@@ -18,6 +18,7 @@ export default [
         '@type': context.get('type'),
         id: context.get('id'),
         UID: context.get('uuid'),
+        items: [],
       });
     },
   },
@@ -25,25 +26,31 @@ export default [
     op: 'post',
     view: '',
     handler: (context, req, res) =>
-      DocumentRepository.create(
-        {
-          parent: context.get('uuid'),
-          id: req.body.id || slugify(req.body.title, { lower: true }),
-          type: req.body['@type'],
-          position_in_parent: 0,
-          json: omit(req.body, omitProperties),
-        },
-        { method: 'insert' },
-      ).then(document =>
-        res.status(201).send({
-          ...document.get('json'),
-          '@id': `${req.protocol || 'http'}://${req.headers.host}${
-            req.params[0]
-          }/${document.get('id')}`,
-          '@type': document.get('type'),
-          id: document.get('id'),
-          UID: document.get('uuid'),
-        }),
+      TypeRepository.findOne({ id: req.body['@type'] }).then(type =>
+        DocumentRepository.create(
+          {
+            parent: context.get('uuid'),
+            id: req.body.id || slugify(req.body.title, { lower: true }),
+            type: req.body['@type'],
+            position_in_parent: 0,
+            json: {
+              ...omit(req.body, omitProperties),
+              layout: type.get('schema').default_layout,
+            },
+          },
+          { method: 'insert' },
+        ).then(document =>
+          res.status(201).send({
+            ...document.get('json'),
+            '@id': `${req.protocol || 'http'}://${req.headers.host}${
+              req.params[0]
+            }/${document.get('id')}`,
+            '@type': document.get('type'),
+            id: document.get('id'),
+            UID: document.get('uuid'),
+            items: [],
+          }),
+        ),
       ),
   },
   {
