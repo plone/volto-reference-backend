@@ -23,6 +23,7 @@ describe('Content', () => {
           expect(res.body.id).toBe('news'),
           expect(res.body.UID).toBeDefined(),
           expect(res.body.items).toBeDefined(),
+          expect(res.body.is_folderish).toBe(true),
         ]),
       ));
   it('should add a content object', () =>
@@ -45,7 +46,6 @@ describe('Content', () => {
           expect(res.body.id).toBe('my-news-item'),
           expect(res.body.layout).toBe('document_view'),
           expect(res.body.UID).toBeDefined(),
-          expect(res.body.items).toBeDefined(),
         ]),
       ));
   it('should update a content object', () =>

@@ -26,6 +26,7 @@ function documentToJson(document, req, id = '') {
     '@type': document.get('type'),
     id: document.get('id'),
     UID: document.get('uuid'),
+    is_folderish: true,
   };
 }
 
@@ -69,16 +70,9 @@ export default [
         )
           .then(document => document.fetch())
           .then(document =>
-            res.status(201).send({
-              ...document.get('json'),
-              '@id': `${req.protocol || 'http'}://${req.headers.host}${
-                req.params[0]
-              }/${document.get('id')}`,
-              '@type': document.get('type'),
-              id: document.get('id'),
-              UID: document.get('uuid'),
-              items: [],
-            }),
+            res
+              .status(201)
+              .send(documentToJson(document, req, `/${document.get('id')}`)),
           ),
       ),
   },
