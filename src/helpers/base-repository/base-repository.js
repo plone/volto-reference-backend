@@ -4,6 +4,7 @@
  */
 
 import autobind from 'autobind-decorator';
+import { isArray } from 'lodash';
 
 @autobind
 /**
@@ -29,9 +30,15 @@ export default class BaseRepository {
    * @returns {Promise<Collection>} A Promise that resolves to a Collection of Models.
    */
   findAll(where = {}, order = 'id', options = {}) {
-    return this.Model.where(where)
-      .orderBy(order)
-      .fetchAll(options);
+    if (isArray(where)) {
+      return this.Model.where(...where)
+        .orderBy(order)
+        .fetchAll(options);
+    } else {
+      return this.Model.where(where)
+        .orderBy(order)
+        .fetchAll(options);
+    }
   }
 
   /**

@@ -1,6 +1,6 @@
 /**
  * Type Model.
- * @module models/type/type
+ * @module models/Type/Type
  */
 
 import { BaseModel } from '../../helpers';

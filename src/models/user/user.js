@@ -1,6 +1,6 @@
 /**
  * User Model.
- * @module models/user/user
+ * @module models/User/User
  */
 
 import { BaseModel } from '../../helpers';

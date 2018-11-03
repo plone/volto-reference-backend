@@ -8,5 +8,10 @@ exports.seed = knex =>
         password,
         fullname: 'Admin',
       },
+      {
+        id: 'anonymous',
+        password,
+        fullname: 'Anonymous',
+      },
     ]),
   );

@@ -1,6 +1,6 @@
 /**
  * Type Repository.
- * @module repositories/document/document
+ * @module repositories/Type/Type
  */
 
 import { Type } from '../../models';

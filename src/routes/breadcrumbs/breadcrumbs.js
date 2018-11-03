@@ -6,6 +6,7 @@
 import { compact, drop, head, last } from 'lodash';
 
 import { DocumentRepository } from '../../repositories';
+import { requirePermission } from '../../helpers';
 
 /**
  * Traverse path.
@@ -38,25 +39,26 @@ export default [
   {
     op: 'get',
     view: '/@breadcrumbs',
-    handler: (context, req, res) => {
-      const slugs = req.params[0].split('/');
-      return DocumentRepository.findOne({ parent: null })
-        .then(document =>
-          traverse(document, compact(slugs), [
-            {
-              '@id': `${req.protocol || 'http'}://${req.headers.host}`,
-              title: document.get('json').title,
-            },
-          ]),
-        )
-        .then(items =>
-          res.send({
-            '@id': `${req.protocol || 'http'}://${req.headers.host}${
-              req.params[0]
-            }/@breadcrumbs`,
-            items,
-          }),
-        );
-    },
+    handler: (context, permissions, req, res) =>
+      requirePermission('view', permissions, res, () => {
+        const slugs = req.params[0].split('/');
+        return DocumentRepository.findOne({ parent: null })
+          .then(document =>
+            traverse(document, compact(slugs), [
+              {
+                '@id': `${req.protocol || 'http'}://${req.headers.host}`,
+                title: document.get('json').title,
+              },
+            ]),
+          )
+          .then(items =>
+            res.send({
+              '@id': `${req.protocol || 'http'}://${req.headers.host}${
+                req.params[0]
+              }/@breadcrumbs`,
+              items,
+            }),
+          );
+      }),
   },
 ];

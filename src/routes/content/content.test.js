@@ -3,6 +3,7 @@ import request from 'supertest';
 import app from '../../app';
 import bookshelf from '../../bookshelf';
 import { DocumentRepository } from '../../repositories';
+import { getAdminHeader } from '../../helpers';
 
 describe('Content', () => {
   afterEach(() =>
@@ -14,6 +15,7 @@ describe('Content', () => {
   it('should return a content object', () =>
     request(app)
       .get('/news')
+      .set('Authorization', getAdminHeader())
       .expect(200)
       .expect(res =>
         Promise.all([
@@ -29,6 +31,7 @@ describe('Content', () => {
   it('should add a content object', () =>
     request(app)
       .post('/news')
+      .set('Authorization', getAdminHeader())
       .send({
         '@type': 'page',
         title: 'My News Item',
@@ -64,6 +67,7 @@ describe('Content', () => {
     ).then(() =>
       request(app)
         .patch('/news/my-news-item')
+        .set('Authorization', getAdminHeader())
         .send({
           title: 'My New News Item',
         })
@@ -85,10 +89,12 @@ describe('Content', () => {
     ).then(() =>
       request(app)
         .delete('/news/my-news-item')
+        .set('Authorization', getAdminHeader())
         .expect(204),
     ));
   it('should return not found when content not found', () =>
     request(app)
       .get('/random')
+      .set('Authorization', getAdminHeader())
       .expect(404));
 });

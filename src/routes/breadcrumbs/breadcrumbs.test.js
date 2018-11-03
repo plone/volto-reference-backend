@@ -3,6 +3,7 @@ import request from 'supertest';
 import app from '../../app';
 import bookshelf from '../../bookshelf';
 import { DocumentRepository } from '../../repositories';
+import { getAdminHeader } from '../../helpers';
 
 describe('Content', () => {
   afterAll(() => bookshelf.knex.destroy());
@@ -10,6 +11,7 @@ describe('Content', () => {
   it('should return the navigation', () =>
     request(app)
       .get('/news/@breadcrumbs')
+      .set('Authorization', getAdminHeader())
       .expect(200)
       .expect(res =>
         Promise.all([

@@ -1,6 +1,6 @@
 /**
  * Document Model.
- * @module models/document/document
+ * @module models/Document/Document
  */
 
 import { BaseModel } from '../../helpers';

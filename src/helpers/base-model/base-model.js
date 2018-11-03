@@ -1,6 +1,6 @@
 /**
  * Bookshelf BaseModel.
- * @module helpers/base-model
+ * @module helpers/base-model/base-model
  */
 
 import { reduce, camelCase, snakeCase } from 'lodash';

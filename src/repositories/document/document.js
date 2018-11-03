@@ -1,14 +1,11 @@
 /**
  * Document Repository.
- * @module repositories/document/document
+ * @module repositories/Document/Document
  */
-
-import autobind from 'autobind-decorator';
 
 import { Document } from '../../models';
 import { BaseRepository } from '../../helpers';
 
-@autobind
 /**
  * A Repository for Document.
  * @class DocumentRepository

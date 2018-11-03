@@ -17,3 +17,4 @@
 - Authentication to login call @robgietema
 - Generate JWT token @robgietema
 - JWT autentication @robgietema
+- Roles and permissions @robgietema

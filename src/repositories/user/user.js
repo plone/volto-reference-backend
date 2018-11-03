@@ -1,6 +1,6 @@
 /**
  * User Repository.
- * @module repositories/user/user
+ * @module repositories/User/User
  */
 
 import { User } from '../../models';

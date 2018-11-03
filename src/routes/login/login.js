@@ -8,12 +8,13 @@ import jwt from 'jsonwebtoken';
 
 import { UserRepository } from '../../repositories';
 import { secret } from '../../config.js';
+import { requirePermission } from '../../helpers';
 
 export default [
   {
     op: 'post',
     view: '/@login',
-    handler: (context, req, res) => {
+    handler: (context, permissions, req, res) => {
       if (!req.body.login || !req.body.password) {
         return res.status(400).send({
           error: {
@@ -58,12 +59,12 @@ export default [
   {
     op: 'post',
     view: '/@login-renew',
-    handler: (context, req, res) =>
+    handler: (context, permissions, req, res) =>
       res.send({
         token: jwt.sign(
           {
-            sub: 'admin',
-            fullname: 'Admin',
+            sub: req.user.get('id'),
+            fullname: req.user.get('fullname'),
           },
           secret,
           { expiresIn: '12h' },
@@ -73,6 +74,6 @@ export default [
   {
     op: 'post',
     view: '/@logout',
-    handler: (context, req, res) => res.status(204).send(),
+    handler: (context, permissions, req, res) => res.status(204).send(),
   },
 ];
