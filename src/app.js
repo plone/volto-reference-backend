@@ -6,18 +6,48 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { compact, drop, head, map } from 'lodash';
+import jwt from 'jsonwebtoken';
 
 import routes from './routes';
-import { DocumentRepository } from './repositories';
+import { DocumentRepository, UserRepository } from './repositories';
+import { secret } from './config';
 
 const app = express();
 
+// Parse JSON
 app.use(bodyParser.json());
+
+// CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
   res.header('Access-Control-Allow-Methods', '*');
   next();
+});
+
+// Add JWT authentication
+app.use((req, res, next) => {
+  const token =
+    req.headers.authorization &&
+    req.headers.authorization.match(/^Bearer (.*)$/);
+  if (token) {
+    jwt.verify(token[1], secret, (err, decoded) => {
+      if (err) {
+        next();
+      } else {
+        UserRepository.findOne({ id: decoded.sub })
+          .then(user => {
+            req.user = user;
+            next();
+          })
+          .catch(UserRepository.Model.NotFoundError, () => {
+            next();
+          });
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 /**
