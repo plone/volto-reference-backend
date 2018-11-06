@@ -9,6 +9,7 @@ exports.up = knex =>
       .references('document.uuid')
       .onDelete('CASCADE');
     table.string('id').notNull();
+    table.string('path').notNull();
     table.string('type').references('type.id');
     table.integer('position_in_parent');
     table.json('json').notNull();

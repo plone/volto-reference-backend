@@ -4,7 +4,7 @@
  */
 
 import slugify from 'slugify';
-import { keys, omit, pick } from 'lodash';
+import { dropRight, keys, omit, pick } from 'lodash';
 
 import { DocumentRepository, TypeRepository } from '../../repositories';
 import { requirePermission } from '../../helpers';
@@ -18,12 +18,12 @@ const omitProperties = ['@type', 'id'];
  * @param {Object} req Request object.
  * @returns {Object} Json representation of the document.
  */
-function documentToJson(document, req, id = '') {
+function documentToJson(document, req) {
   return {
     ...document.get('json'),
-    '@id': `${req.protocol || 'http'}://${req.headers.host}${
-      req.params[0]
-    }${id}`,
+    '@id': `${req.protocol || 'http'}://${req.headers.host}${document.get(
+      'path',
+    )}`,
     '@type': document.get('type'),
     id: document.get('id'),
     UID: document.get('uuid'),
@@ -43,9 +43,7 @@ export default [
         ).then(items =>
           res.send({
             ...documentToJson(context, req),
-            items: items.map(item =>
-              documentToJson(item, req, `/${item.get('id')}`),
-            ),
+            items: items.map(item => documentToJson(item, req)),
           }),
         ),
       ),
@@ -55,11 +53,15 @@ export default [
     view: '',
     handler: (context, permissions, req, res) =>
       requirePermission('add', permissions, res, () =>
-        TypeRepository.findOne({ id: req.body['@type'] }).then(type =>
+        TypeRepository.findOne({ id: req.body['@type'] }).then(type => {
+          const id = req.body.id || slugify(req.body.title, { lower: true });
           DocumentRepository.create(
             {
               parent: context.get('uuid'),
-              id: req.body.id || slugify(req.body.title, { lower: true }),
+              id,
+              path: `${
+                context.get('path') === '/' ? '' : context.get('path')
+              }/${id}`,
               type: req.body['@type'],
               position_in_parent: 0,
               json: {
@@ -77,19 +79,26 @@ export default [
               res
                 .status(201)
                 .send(documentToJson(document, req, `/${document.get('id')}`)),
-            ),
-        ),
+            );
+        }),
       ),
   },
   {
     op: 'patch',
     view: '',
     handler: (context, permissions, req, res) =>
-      requirePermission('modify', permissions, res, () =>
-        context
+      requirePermission('modify', permissions, res, () => {
+        const id = req.body.id || context.get('id');
+        const path = context.get('path');
+        const slugs = path.split('/');
+        const parent = dropRight(slugs).join('/');
+        const newPath = path === '/' ? path : `${parent}/${id}`;
+        return context
           .save(
             {
               uuid: context.get('uuid'),
+              id,
+              path: newPath,
               json: {
                 ...context.get('json'),
                 ...omit(req.body, omitProperties),
@@ -97,8 +106,14 @@ export default [
             },
             { patch: true },
           )
-          .then(() => res.status(204).send()),
-      ),
+          .then(
+            () =>
+              path === newPath
+                ? Promise.resolve({})
+                : DocumentRepository.replacePath(path, newPath),
+          )
+          .then(data => res.status(204).send());
+      }),
   },
   {
     op: 'delete',

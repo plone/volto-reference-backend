@@ -8,6 +8,7 @@ import { Type } from '../../models';
 
 export default BaseModel.extend({
   tableName: 'document',
+  idAttribute: 'uuid',
   parent() {
     return this.belongsTo(Document);
   },

@@ -18,4 +18,5 @@
 - Generate JWT token @robgietema
 - JWT autentication @robgietema
 - Roles and permissions @robgietema
-- Added basic search endpoint @robgietema
+- Basic search endpoint @robgietema
+- Path stored with document @robgietema

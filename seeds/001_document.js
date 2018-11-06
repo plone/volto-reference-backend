@@ -3,6 +3,7 @@ exports.seed = knex =>
     {
       uuid: '4ba6ac12-2a02-40be-a76f-9067ce98ed47',
       id: 'site',
+      path: '/',
       type: 'site',
       position_in_parent: 0,
       json: {
@@ -14,6 +15,7 @@ exports.seed = knex =>
       uuid: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
       parent: '4ba6ac12-2a02-40be-a76f-9067ce98ed47',
       id: 'news',
+      path: '/news',
       type: 'folder',
       position_in_parent: 0,
       json: {
@@ -25,6 +27,7 @@ exports.seed = knex =>
       uuid: '6ba6ac12-2a02-40be-a76f-9067ce98ed47',
       parent: '4ba6ac12-2a02-40be-a76f-9067ce98ed47',
       id: 'events',
+      path: '/events',
       type: 'folder',
       position_in_parent: 1,
       json: {
@@ -36,6 +39,7 @@ exports.seed = knex =>
       uuid: '7ba6ac12-2a02-40be-a76f-9067ce98ed47',
       parent: '4ba6ac12-2a02-40be-a76f-9067ce98ed47',
       id: 'users',
+      path: '/users',
       type: 'folder',
       position_in_parent: 2,
       json: {
