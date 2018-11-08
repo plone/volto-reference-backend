@@ -88,7 +88,7 @@ export default [
     view: '',
     handler: (context, permissions, req, res) =>
       requirePermission('modify', permissions, res, () =>
-        TypeRepository.findOne({ id: req.body['@type'] }).then(type => {
+        TypeRepository.findOne({ id: context.get('type') }).then(type => {
           const id = req.body.id || context.get('id');
           const path = context.get('path');
           const slugs = path.split('/');
@@ -103,7 +103,10 @@ export default [
                 json: {
                   ...context.get('json'),
                   ...omit(
-                    pick(req.body, keys(type.get('schema').properties)),
+                    pick(req.body, [
+                      ...keys(type.get('schema').properties),
+                      'layout',
+                    ]),
                     omitProperties,
                   ),
                 },

@@ -7,8 +7,14 @@ exports.seed = knex =>
       type: 'site',
       position_in_parent: 0,
       json: {
-        title: 'Site',
+        title: 'Welcome to Volto',
+        description: 'Congratulations! You have successfully installed Volto.',
         layout: 'document_view',
+        text: {
+          'content-type': 'text/html',
+          data:
+            "If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Volto. Do not contact the Volto Team or the Volto support channels about this.",
+        },
       },
     },
     {
