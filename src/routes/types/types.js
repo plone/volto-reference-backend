@@ -18,7 +18,7 @@ export default [
               '@id': `${req.protocol || 'http'}://${
                 req.headers.host
               }/@types/${type.get('id')}`,
-              addable: true,
+              addable: type.get('addable'),
               title: type.get('title'),
             })),
           ),

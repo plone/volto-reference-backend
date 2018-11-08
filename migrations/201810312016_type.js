@@ -5,6 +5,7 @@ exports.up = knex =>
       .primary()
       .notNull();
     table.string('title').notNull();
+    table.boolean('addable');
     table.json('schema').notNull();
   });
 

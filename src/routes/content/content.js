@@ -87,33 +87,38 @@ export default [
     op: 'patch',
     view: '',
     handler: (context, permissions, req, res) =>
-      requirePermission('modify', permissions, res, () => {
-        const id = req.body.id || context.get('id');
-        const path = context.get('path');
-        const slugs = path.split('/');
-        const parent = dropRight(slugs).join('/');
-        const newPath = path === '/' ? path : `${parent}/${id}`;
-        return context
-          .save(
-            {
-              uuid: context.get('uuid'),
-              id,
-              path: newPath,
-              json: {
-                ...context.get('json'),
-                ...omit(req.body, omitProperties),
+      requirePermission('modify', permissions, res, () =>
+        TypeRepository.findOne({ id: req.body['@type'] }).then(type => {
+          const id = req.body.id || context.get('id');
+          const path = context.get('path');
+          const slugs = path.split('/');
+          const parent = dropRight(slugs).join('/');
+          const newPath = path === '/' ? path : `${parent}/${id}`;
+          return context
+            .save(
+              {
+                uuid: context.get('uuid'),
+                id,
+                path: newPath,
+                json: {
+                  ...context.get('json'),
+                  ...omit(
+                    pick(req.body, keys(type.get('schema').properties)),
+                    omitProperties,
+                  ),
+                },
               },
-            },
-            { patch: true },
-          )
-          .then(
-            () =>
-              path === newPath
-                ? Promise.resolve({})
-                : DocumentRepository.replacePath(path, newPath),
-          )
-          .then(data => res.status(204).send());
-      }),
+              { patch: true },
+            )
+            .then(
+              () =>
+                path === newPath
+                  ? Promise.resolve({})
+                  : DocumentRepository.replacePath(path, newPath),
+            )
+            .then(data => res.status(204).send());
+        }),
+      ),
   },
   {
     op: 'delete',

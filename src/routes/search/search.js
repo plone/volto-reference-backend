@@ -16,7 +16,7 @@ import { requirePermission } from '../../helpers';
 function documentToJson(document, req) {
   return {
     ...document.get('json'),
-    '@id': `${req.protocol || 'http'}://${req.headers.host}${documnent.get(
+    '@id': `${req.protocol || 'http'}://${req.headers.host}${document.get(
       'path',
     )}`,
     '@type': document.get('type'),

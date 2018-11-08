@@ -20,3 +20,4 @@
 - Roles and permissions @robgietema
 - Basic search endpoint @robgietema
 - Path stored with document @robgietema
+- Addable types setting @robgietema
