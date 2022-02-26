@@ -18,7 +18,6 @@ A training on how to create your own website using Volto is available as part of
     $ GRANT ALL PRIVILEGES ON DATABASE volto TO volto;
     $ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-!!! Note -
     Make sure the volto user has the priviledges to run 
     the last command.
 
