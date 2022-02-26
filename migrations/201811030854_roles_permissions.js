@@ -1,53 +1,57 @@
-exports.up = knex =>
+exports.up = (knex) =>
   knex.schema
-    .createTable('role', table => {
+    .createTable('role', (table) => {
       table.string('id').primary();
       table.string('label');
     })
     .then(() =>
-      knex.schema.createTable('permission', table => {
+      knex.schema.createTable('permission', (table) => {
         table.string('id').primary();
         table.string('label');
       }),
     )
     .then(() =>
-      knex.schema.createTable('role_permission', table => {
-        table
-          .uuid('id')
-          .primary()
-          .defaultTo(knex.raw('uuid_generate_v4()'));
+      knex.schema.createTable('role_permission', (table) => {
+        table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
         table
           .string('role')
           .notNull()
-          .references('role.id');
+          .references('role.id')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE');
         table
           .string('permission')
           .notNull()
-          .references('permission.id');
+          .references('permission.id')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE');
       }),
     )
     .then(() =>
-      knex.schema.createTable('user_role_document', table => {
-        table
-          .uuid('id')
-          .primary()
-          .defaultTo(knex.raw('uuid_generate_v4()'));
+      knex.schema.createTable('user_role_document', (table) => {
+        table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
         table
           .string('user')
           .notNull()
-          .references('user.id');
+          .references('user.id')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE');
         table
           .string('role')
           .notNull()
-          .references('role.id');
+          .references('role.id')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE');
         table
           .uuid('document')
           .notNull()
-          .references('document.uuid');
+          .references('document.uuid')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE');
       }),
     );
 
-exports.down = knex =>
+exports.down = (knex) =>
   knex.schema
     .dropTable('user_role_document')
     .then(() => knex.schema.dropTable('role_permission'))
