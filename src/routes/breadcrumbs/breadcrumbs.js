@@ -56,7 +56,7 @@ export default [
               '@id': `${req.protocol || 'http'}://${req.headers.host}${
                 req.params[0]
               }/@breadcrumbs`,
-              items: drop(items),
+              items,
             }),
           );
       }),

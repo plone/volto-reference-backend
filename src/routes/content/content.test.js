@@ -57,6 +57,7 @@ describe('Content', () => {
         parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
         id: 'my-news-item',
         type: 'page',
+        path: '/news/my-news-item',
         position_in_parent: 0,
         json: {
           title: 'My News Item',
@@ -79,6 +80,7 @@ describe('Content', () => {
         parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
         id: 'my-news-item',
         type: 'page',
+        path: '/news/my-news-item',
         position_in_parent: 0,
         json: {
           title: 'My News Item',

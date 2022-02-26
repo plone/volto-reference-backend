@@ -20,7 +20,7 @@ describe('Content', () => {
           ),
           expect(res.body.items.length).toBe(2),
           expect(res.body.items[0]['@id']).toMatch(/http:\/\/127.0.0.1:.*/),
-          expect(res.body.items[0].title).toBe('Site'),
+          expect(res.body.items[0].title).toBe('Welcome to Volto'),
           expect(res.body.items[1]['@id']).toMatch(
             /http:\/\/127.0.0.1:.*\/news/,
           ),
