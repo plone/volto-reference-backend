@@ -8,7 +8,7 @@ A training on how to create your own website using Volto is available as part of
 
 ### Prerequisites
 
-- [Node.js==8.11.3](https://nodejs.org/)
+- [Node.js==16.x.x](https://nodejs.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 
 ### Create Database
@@ -18,8 +18,7 @@ A training on how to create your own website using Volto is available as part of
     $ GRANT ALL PRIVILEGES ON DATABASE volto TO volto;
     $ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-    Make sure the volto user has the priviledges to run 
-    the last command.
+Make sure the volto user has the privileges to run the last command.
 
 ### Install Dependencies
 
