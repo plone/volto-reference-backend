@@ -1,8 +1,11 @@
 import request from 'supertest';
 
 import app from '../../app';
+import bookshelf from '../../bookshelf';
 
 describe('Content', () => {
+  afterAll(() => bookshelf.knex.destroy());
+
   it('should handle login', () =>
     request(app)
       .post('/@login')

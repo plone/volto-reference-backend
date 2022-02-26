@@ -7,9 +7,14 @@ import { getAdminHeader } from '../../helpers';
 
 describe('Content', () => {
   afterEach(() =>
-    DocumentRepository.delete({
-      parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
-    }));
+    DocumentRepository.delete(
+      {
+        parent: '5ba6ac12-2a02-40be-a76f-9067ce98ed47',
+      },
+      {
+        require: false,
+      },
+    ));
   afterAll(() => bookshelf.knex.destroy());
 
   it('should return a content object', () =>

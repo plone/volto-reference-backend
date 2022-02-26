@@ -5,6 +5,8 @@ import bookshelf from '../../bookshelf';
 import { getAdminHeader } from '../../helpers';
 
 describe('Types', () => {
+  afterAll(() => bookshelf.knex.destroy());
+
   it('should return a list of types', () =>
     request(app)
       .get('/@types')
@@ -29,7 +31,4 @@ describe('Types', () => {
       .get('/@types/random')
       .set('Authorization', getAdminHeader())
       .expect(404));
-  afterAll(() => {
-    bookshelf.knex.destroy();
-  });
 });
