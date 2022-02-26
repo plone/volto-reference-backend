@@ -23,7 +23,7 @@ function traverse(document, slugs, items) {
     return DocumentRepository.findOne({
       parent: document.get('uuid'),
       id: head(slugs),
-    }).then(parent =>
+    }).then((parent) =>
       traverse(parent, drop(slugs), [
         ...items,
         {
@@ -43,7 +43,7 @@ export default [
       requirePermission('view', permissions, res, () => {
         const slugs = req.params[0].split('/');
         return DocumentRepository.findOne({ parent: null })
-          .then(document =>
+          .then((document) =>
             traverse(document, compact(slugs), [
               {
                 '@id': `${req.protocol || 'http'}://${req.headers.host}`,
@@ -51,12 +51,12 @@ export default [
               },
             ]),
           )
-          .then(items =>
+          .then((items) =>
             res.send({
               '@id': `${req.protocol || 'http'}://${req.headers.host}${
                 req.params[0]
               }/@breadcrumbs`,
-              items,
+              items: drop(items),
             }),
           );
       }),

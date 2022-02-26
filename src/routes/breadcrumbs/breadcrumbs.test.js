@@ -13,18 +13,16 @@ describe('Content', () => {
       .get('/news/@breadcrumbs')
       .set('Authorization', getAdminHeader())
       .expect(200)
-      .expect(res =>
+      .expect((res) =>
         Promise.all([
           expect(res.body['@id']).toMatch(
             /http:\/\/127.0.0.1:.*\/news\/@breadcrumbs/,
           ),
-          expect(res.body.items.length).toBe(2),
-          expect(res.body.items[0]['@id']).toMatch(/http:\/\/127.0.0.1:.*/),
-          expect(res.body.items[0].title).toBe('Welcome to Volto'),
-          expect(res.body.items[1]['@id']).toMatch(
+          expect(res.body.items.length).toBe(1),
+          expect(res.body.items[0]['@id']).toMatch(
             /http:\/\/127.0.0.1:.*\/news/,
           ),
-          expect(res.body.items[1].title).toBe('News'),
+          expect(res.body.items[0].title).toBe('News'),
         ]),
       ));
 });
