@@ -14,7 +14,8 @@ describe('Content', () => {
       {
         require: false,
       },
-    ));
+    ),
+  );
   afterAll(() => bookshelf.knex.destroy());
 
   it('should return a content object', () =>
@@ -22,7 +23,7 @@ describe('Content', () => {
       .get('/news')
       .set('Authorization', getAdminHeader())
       .expect(200)
-      .expect(res =>
+      .expect((res) =>
         Promise.all([
           expect(res.body['@id']).toMatch(/http:\/\/127.0.0.1:.*\/news/),
           expect(res.body['@type']).toBe('folder'),
@@ -43,7 +44,7 @@ describe('Content', () => {
         description: 'News Description',
       })
       .expect(201)
-      .expect(res =>
+      .expect((res) =>
         Promise.all([
           expect(res.body['@id']).toMatch(
             /http:\/\/127.0.0.1:.*\/news\/my-news-item/,
@@ -52,7 +53,6 @@ describe('Content', () => {
           expect(res.body.title).toBe('My News Item'),
           expect(res.body.description).toBe('News Description'),
           expect(res.body.id).toBe('my-news-item'),
-          expect(res.body.layout).toBe('document_view'),
           expect(res.body.UID).toBeDefined(),
         ]),
       ));
